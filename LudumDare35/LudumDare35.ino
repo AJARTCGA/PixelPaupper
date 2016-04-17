@@ -55,12 +55,20 @@ void setup()
   color.longColor = 0x00100000;
   player.x = 10;
   player.y = 7;
+  player.subx = 0;
+  player.suby = 0;
+  player.dX = 127;
+  player.dY = 127;
   player.color = color;
   player.coreColor.longColor = 0x10101010;
   player.bulletList = NULL;
 
   player2.x = 7;
   player2.y = 7;
+  player2.subx = 0;
+  player2.suby = 0;
+  player2.dY = -127;
+  player2.dX = -127;
   player2.coreColor.longColor = 0x10101010;
   player2.color.longColor = 0x10000000;
   player2.bulletList = NULL;

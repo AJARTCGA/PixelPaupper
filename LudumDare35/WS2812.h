@@ -36,6 +36,12 @@ typedef struct Bullet
 typedef struct Player
 {
   byte x, y;
+  int subx, suby;
+  int dX, dY;
+  
+  byte oldx, oldy;
+  byte oldsubx, oldsuby;
+  
   byte mask[25];
   Color color;
   Color coreColor;

@@ -1,5 +1,9 @@
 #include <stdlib.h>
 
+int sign(int x) {
+    return (x > 0) - (x < 0);
+}
+
 void drawPlayer(Player * p, byte doClear)
 {
   byte i, j;
@@ -68,6 +72,47 @@ void updateBullet(Bullet * b)
 
 void updatePlayer(Player * p)
 {
+  p->oldx = p->x;
+  p->oldy = p->y;
+  p->oldsubx = p->subx;
+  p->oldsuby = p->suby;
+    
+  p->subx += p->dX;
+  p->suby += p->dY;
+
+  if(abs(p->subx) > 255)
+  {
+    p->subx = 0;
+    p->x += 1 * sign(p->dX);
+  }
+
+  if(abs(p->suby) > 255)
+  {
+    p->suby = 0;
+    p->y += 1 * sign(p->dY);
+  }
+
+  if(255 - p->suby <= p->dY)
+  {
+    p->suby = 0;
+    p->y++;
+  }
+  else
+  {
+  }
+
+  if (p->x > 11)
+  {
+    p->x = p->oldx;
+    p->subx = p->oldsubx;
+  }
+
+  if (p->y > 11)
+  {
+    p->y = p->oldy;
+    p->suby = p->oldsuby;
+  }
+  
   if(p->bulletList)
   {
     if(!p->bulletList->isDead)
