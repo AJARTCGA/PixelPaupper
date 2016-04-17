@@ -110,7 +110,6 @@ void loop()
   }
   if (count2 == 30)
   {
-<<<<<<< HEAD
     //playerShootBullet(&player);
     rotatePlayer(&player);
     testEnemy.x++;
@@ -118,9 +117,6 @@ void loop()
     {
       testEnemy.x = 0;
     }
-=======
-    rotatePlayer(&player2);
->>>>>>> origin
     count2 = 0;
   }
   delay(20);

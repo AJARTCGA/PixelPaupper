@@ -1,34 +1,5 @@
-<<<<<<< HEAD
-=======
 #include <stdlib.h>
 
-/*void drawPlayer(Player * p)
-{
-  float i, j;
-  int r1, r2;
-  Color c2;
-  r1 = p -> r1 * p ->r1;
-  r2 = p -> r2 * p ->r2;
-  for(i = 0; i <= 15; i++)
-  {
-    for(j = 0; j <= 15; j++)
-    {
-      if (r1/ ((i-p->x1)*(i-p->x1) + (j-p->y1)*(j-p->y1)) + r2 /((i-p->x2)*(i-p->x2) + (j-p->y2)*(j-p->y2)) >= 1)
-      {
-        setPixel(i, j, p -> color);
-      }  
-    }
-  }
-  c2.longColor = 0x10000000;
-  setPixel(p -> x1, p -> y1, c2);
-  setPixel(p -> x2, p -> y2, c2);
-  if(p -> bulletList != NULL)
-  {
-    drawBullet(p -> bulletList);
-  }
-}*/
-
->>>>>>> origin
 void drawPlayer(Player * p, byte doClear)
 {
   byte i, j;
