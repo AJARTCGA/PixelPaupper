@@ -98,7 +98,7 @@ void loop()
   }
   if (count2 == 30)
   {
-    //playerShootBullet(&player);
+    rotatePlayer(&player2);
     count2 = 0;
   }
   delay(20);

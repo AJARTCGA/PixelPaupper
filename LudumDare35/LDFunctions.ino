@@ -1,3 +1,5 @@
+#include <stdlib.h>
+
 /*void drawPlayer(Player * p)
 {
   float i, j;
@@ -30,9 +32,9 @@ void drawPlayer(Player * p, byte doClear)
   byte count = 0;
   static Color clearColor;
   
-  for(i = p->x-2; i <= p->x + 2; i++)
+  for(i = p->x; i <= p->x; i++)
   {
-    for(j = p->y-2; j <= p->y + 2; j++)
+    for(j = p->y; j <= p->y; j++)
     {
       //Serial.println(p->mask[i + j * 5]);
       if(p->mask[count])
@@ -95,6 +97,18 @@ void updatePlayer(Player * p)
   if(p -> bulletList)
   {
     updateBullet(p -> bulletList);
+  }
+}
+
+byte checkHitPlayerBullet(Player * p, Bullet * b)
+{
+  static byte r, c;
+  if (b->x.pixel >= p->x && (b->x.pixel - p->x)=c <= 4)
+  {
+    if (b->y.pixel >= p->y && (b->y.pixel - p->y)=r <= 4)
+    {
+      return p->mask[5*r+c];
+    }
   }
 }
 
