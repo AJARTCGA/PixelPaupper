@@ -120,3 +120,16 @@ void addBullet(Bullet ** bList, Bullet * b)
   (*bList) = b;
 }
 
+void rotatePlayer(Player * p)
+{
+  byte i, j;
+  byte tempArray[25]; 
+  for(i = 0; i < 5; i++)
+  {
+    for(j = 0; j < 5; j++)
+    {
+      tempArray[j + (-i + 4) * 5]  = p->mask[i + j * 5];
+    }
+  }
+  memcpy(p->mask, tempArray, 25);
+}
