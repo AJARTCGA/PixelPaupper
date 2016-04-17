@@ -32,9 +32,9 @@ void drawPlayer(Player * p, byte doClear)
   byte count = 0;
   static Color clearColor;
   
-  for(i = p->x; i <= p->x; i++)
+  for(i = p->x; i <= p->x + 4; i++)
   {
-    for(j = p->y; j <= p->y; j++)
+    for(j = p->y; j <= p->y + 4; j++)
     {
       //Serial.println(p->mask[i + j * 5]);
       if(p->mask[count])
@@ -65,8 +65,8 @@ void drawPlayers(Player * p1, Player * p2)
   drawPlayer(p1, 0);
   drawPlayer(p2, 0);
   setBlendMode(NO_BLEND);
-  setPixel(p1->x, p1->y, p1->coreColor);
-  setPixel(p2->x, p2->y, p2->coreColor);
+  setPixel(p1->x+2, p1->y+2, p1->coreColor);
+  setPixel(p2->x+2, p2->y+2, p2->coreColor);
 }
 
 void drawBullet(Bullet * b)
@@ -103,11 +103,24 @@ void updatePlayer(Player * p)
 byte checkHitPlayerBullet(Player * p, Bullet * b)
 {
   static byte r, c;
-  if (b->x.pixel >= p->x && (b->x.pixel - p->x)=c <= 4)
+  if (b->isDead)
   {
-    if (b->y.pixel >= p->y && (b->y.pixel - p->y)=r <= 4)
+    return 0;
+  }
+  if (b->x.pixel >= p->x && (r = b->x.pixel - p->x) <= 4)
+  {
+    if (b->y.pixel >= p->y && (c = b->y.pixel - p->y) <= 4)
     {
-      return p->mask[5*r+c];
+      if (p->mask[5*r + c])
+      {
+        p->mask[5*r + c] = 0;
+        b->isDead = 1;
+        return 1;
+      }
+      else
+      {
+        return 0;
+      }
     }
   }
 }

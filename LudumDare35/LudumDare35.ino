@@ -67,13 +67,13 @@ void setup()
   {
     //Serial.println(player.mask[i]);
   }
-  testBullet.x.subShort = 0x0100;
+  testBullet.x.subShort = 0x0500;
   testBullet.y.subShort = 0x0100;
-  testBullet.dX = 255;
+  testBullet.dX = 127;
   testBullet.dY = 127;
   color.longColor = 0x00101000;
   testBullet.color = color;
-  drawBullet(&testBullet);
+  testBullet.isDead = 0;
 }//setup
 
 
@@ -84,12 +84,22 @@ void loop()
   count2++;
   if (count == 10)
   {
-    updateBullet(&testBullet);
+    if (! testBullet.isDead)
+    {
+      updateBullet(&testBullet);
+    }
+    
     updatePlayer(&player);
-    color.longColor = 0x22222002;
+    checkHitPlayerBullet(&player, &testBullet);
+    checkHitPlayerBullet(&player2, &testBullet);
+    color.longColor = 0x02020002;
     fillScreen(color);
     drawPlayers(&player, &player2);
-    drawBullet(&testBullet);
+    if (! testBullet.isDead)
+    {
+      drawBullet(&testBullet);
+    }
+    
     color.longColor = 0x0f000000;
     RGB_update(-1,0,0,0);//LED#, RED, GREEN, BLUE
     

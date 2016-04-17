@@ -29,6 +29,7 @@ typedef struct Bullet
   SubPixel y;
   float dX, dY;
   Color color;
+  byte isDead;
   Bullet * nextBullet;
 } Bullet;
 
