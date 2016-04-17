@@ -13,6 +13,7 @@ Player player;
 Player player2;
 Bullet testBullet;
 Enemy testEnemy;
+Bullet tempBullet;
 
 //Initialization
 void setup() 
@@ -100,6 +101,7 @@ void loop()
     }
     
     updatePlayer(&player);
+    updatePlayer(&player2);
     checkHitPlayerBullet(&player, &testBullet);
     checkHitPlayerBullet(&player2, &testBullet);
     color.longColor = 0x02020002;
@@ -118,7 +120,8 @@ void loop()
   }
   if (count2 == 30)
   {
-    //playerShootBullet(&player);
+    playerShootBullet(&player);
+    playerShootBullet(&player2);
     rotatePlayer(&player);
     testEnemy.x++;
     if(testEnemy.x >= 15)

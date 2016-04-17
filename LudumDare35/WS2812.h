@@ -1,5 +1,5 @@
 //VARIABLES AND DEFINES HERE - NEEDED BY THE WS2812 DRIVER CODE
-#define WS2812_pin 8 // only digital pin 8 works right now
+#define WS2812_pin 53 // only digital pin 8 works right now
 #define NUM_LEDS (256)// total number of RGB LEDs
 #define NO_BLEND 0
 #define ADD_BLEND 1

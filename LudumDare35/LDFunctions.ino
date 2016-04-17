@@ -45,7 +45,7 @@ void drawPlayers(Player * p1, Player * p2)
 
 void drawBullet(Bullet * b)
 {
-  setPixel(b -> x.pixel, b -> y.pixel, b -> color);
+  setPixel(b->x.pixel, b->y.pixel, b->color);
   if ( b -> nextBullet != NULL)
   {
     drawBullet(b -> nextBullet);
@@ -56,29 +56,31 @@ void updateBullet(Bullet * b)
 {
   b -> x.subShort += b -> dX;
   b -> y.subShort += b -> dY;
-  if(b -> x.pixel >= 15 || b -> x.pixel <= 0)
+  if(b -> x.pixel >= 15 || b -> x.pixel <= 0 || b -> y.pixel >= 15 || b -> y.pixel <= 0)
   {
-    b -> dX *= -1;
+    b->isDead = 1;
   }
-  if(b -> y.pixel >= 15 || b -> y.pixel <= 0)
+  if(b->nextBullet != NULL)
   {
-    b -> dY *= -1;
+    updateBullet(b->nextBullet);
   }
-  Serial.print(b->x.pixel);
-  Serial.print(" ");
-  Serial.print(b->y.pixel);
-  Serial.print(" ");
-  Serial.print(b->dX);
-  Serial.print(" ");
-  Serial.print(b->dY);
-  Serial.print("\n");
 }
 
 void updatePlayer(Player * p)
 {
-  if(p -> bulletList)
+  if(p->bulletList)
   {
-    updateBullet(p -> bulletList);
+    if(!p->bulletList->isDead)
+    {
+      updateBullet(p->bulletList);
+    }
+    else
+    {
+      Bullet * tempPtr = p->bulletList->nextBullet;
+      free(p->bulletList);
+      p->bulletList = NULL;
+      p->bulletList = tempPtr;
+    }
   }
 }
 
@@ -109,15 +111,24 @@ byte checkHitPlayerBullet(Player * p, Bullet * b)
 
 void playerShootBullet(Player * p)
 {
-  Bullet b;
-  Color c;
-  c.longColor = 0x00101000;
-  b.x.pixel = p->x;
-  b.y.pixel = p->y;
-  b.dY = -1;
-  b.nextBullet = NULL;
-  b.color = c;
-  addBullet(&(p -> bulletList), &b);
+  Bullet * b = (Bullet *)malloc(sizeof(Bullet));
+  if(b == 0)
+  {
+    Serial.println("Could not create room for new bullet!");
+  }
+  else
+  {
+    b->x.subShort = 0.0f;
+    b->y.subShort = 0.0f;
+    b->x.pixel = p->x + 2;
+    b->y.pixel = p->y + 2;
+    b->dX = 0;
+    b->dY = -127;
+    b->nextBullet = NULL;
+    b->color = p->coreColor;
+    b->isDead = 0;
+    addBullet(&(p->bulletList), b);
+  }
 }
 
 void addBullet(Bullet ** bList, Bullet * b)
