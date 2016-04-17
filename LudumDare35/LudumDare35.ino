@@ -1,6 +1,7 @@
 #include "WS2812.h"
 #include <avr/io.h>
 #include <avr/interrupt.h>
+#include <stdlib.h>
 
 //Variables
 //byte RGB[768];//take your number of LEDs and multiply by 3
@@ -10,11 +11,23 @@ int count = 0;
 int count2 = 0;
 Color color;
 Player player;
+Player player2;
 Bullet testBullet, b2, b3,b4;
 
 //Initialization
 void setup() 
 {  
+  byte player1Mask[25] =  {0, 0, 1, 0, 0, 
+                           0, 1, 1, 1, 0,
+                           1, 1, 0, 1, 1,
+                           0, 1, 1, 1, 0,
+                           0, 0, 1, 0, 0};
+  byte player2Mask[25] =  {0, 0, 1, 0, 0, 
+                           0, 1, 1, 1, 0,
+                           1, 1, 0, 1, 1,
+                           0, 1, 1, 1, 0,
+                           0, 0, 1, 0, 0};
+                           
   pinMode(WS2812_pin, OUTPUT);
   
   Serial.begin(9600);
@@ -34,27 +47,26 @@ void setup()
   TIMSK1 |= (1 << OCIE1A);
   // enable global interrupts:
   sei();
-  color.longColor = 0x10100000;
+  color.longColor = 0x00100000;
   player.x = 10;
   player.y = 7;
   player.color = color;
+  player.coreColor.longColor = 0x10101010;
   player.bulletList = NULL;
+
+  player2.x = 7;
+  player2.y = 7;
+  player2.coreColor.longColor = 0x10101010;
+  player2.color.longColor = 0x10000000;
+  player2.bulletList = NULL;
+  
+  memcpy(player.mask, player1Mask, 25);
+  memcpy(player2.mask, player2Mask, 25);
+  
   for(int i = 0; i < 25; i++)
   {
-    if(i%2)
-    {
-      player.mask[i] = 0;
-    }
-    else
-    {
-      player.mask[i] = 1;
-    }
+    //Serial.println(player.mask[i]);
   }
-  for(int i = 0; i < 25; i++)
-  {
-    Serial.println(player.mask[i]);
-  }
-  drawPlayer(&player);
   testBullet.x.subShort = 0x0100;
   testBullet.y.subShort = 0x0100;
   testBullet.dX = 255;
@@ -74,9 +86,9 @@ void loop()
   {
     updateBullet(&testBullet);
     updatePlayer(&player);
-    color.longColor = 0x02020002;
+    color.longColor = 0x22222002;
     fillScreen(color);
-    drawPlayer(&player);
+    drawPlayers(&player, &player2);
     drawBullet(&testBullet);
     color.longColor = 0x0f000000;
     RGB_update(-1,0,0,0);//LED#, RED, GREEN, BLUE
@@ -86,7 +98,7 @@ void loop()
   }
   if (count2 == 30)
   {
-    playerShootBullet(&player);
+    //playerShootBullet(&player);
     count2 = 0;
   }
   delay(20);

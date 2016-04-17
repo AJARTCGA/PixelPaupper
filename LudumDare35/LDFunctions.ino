@@ -24,10 +24,12 @@
   }
 }*/
 
-void drawPlayer(Player * p)
+void drawPlayer(Player * p, byte doClear)
 {
   byte i, j;
   byte count = 0;
+  static Color clearColor;
+  
   for(i = p->x-2; i <= p->x + 2; i++)
   {
     for(j = p->y-2; j <= p->y + 2; j++)
@@ -35,7 +37,14 @@ void drawPlayer(Player * p)
       //Serial.println(p->mask[i + j * 5]);
       if(p->mask[count])
       {
-        setPixel(i, j, p->color);
+        if (doClear)
+        {
+          setPixel(i, j, clearColor);
+        }
+        else
+        {
+          setPixel(i, j, p->color);
+        }
       }
       count++;
     }
@@ -44,6 +53,18 @@ void drawPlayer(Player * p)
   {
     drawBullet(p -> bulletList);
   }
+}
+
+void drawPlayers(Player * p1, Player * p2)
+{
+  drawPlayer(p1, 1);
+  drawPlayer(p2, 1);
+  setBlendMode(ADD_BLEND);
+  drawPlayer(p1, 0);
+  drawPlayer(p2, 0);
+  setBlendMode(NO_BLEND);
+  setPixel(p1->x, p1->y, p1->coreColor);
+  setPixel(p2->x, p2->y, p2->coreColor);
 }
 
 void drawBullet(Bullet * b)

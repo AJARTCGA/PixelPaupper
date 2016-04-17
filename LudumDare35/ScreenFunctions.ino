@@ -1,5 +1,8 @@
 //Sets the RGB value of a specific pixel on the screen
 // (0,0) is the top left hand corner of the screen
+
+byte blendMode = 0;
+
 void setPixel(byte x, byte y, Color c)
 {
   int index;
@@ -11,9 +14,25 @@ void setPixel(byte x, byte y, Color c)
   {
     index = (y*48) + 45-(x*3);
   }
-  RGB[index] = c.rgb.g;
-  RGB[index+1] = c.rgb.r;
-  RGB[index+2] = c.rgb.b;
+
+  if (blendMode)
+  {
+    //Right now, just assumes true to be additive
+    RGB[index] += c.rgb.g;
+    RGB[index+1] += c.rgb.r;
+    RGB[index+2] += c.rgb.b;
+  }
+  else
+  {   
+    RGB[index] = c.rgb.g;
+    RGB[index+1] = c.rgb.r;
+    RGB[index+2] = c.rgb.b;
+  }
+}
+
+byte setBlendMode(byte newBlendMode)
+{
+  blendMode = newBlendMode;
 }
 
 //Fills the screen in one color
