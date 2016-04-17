@@ -182,8 +182,9 @@ void blit(byte * ar, byte x, byte y, byte w, byte h)
   }
 }
 
-//NOT BY ME, NEED TO FIND NAME TO GIVE CREDIT
+
 //WS2812 Driver Function 
+//Code by Kevin Darrah -> http://kevindarrah.com/download/arduino_code/WS1812_V4_FOR_VIDEO.ino
 void RGB_update(int LED, byte RED, byte GREEN, byte BLUE) {
   // LED is the LED number starting with 0
   // RED, GREEN, BLUE is the brightness 0..255 setpoint for that LED

@@ -41,6 +41,13 @@ typedef struct Player
   Bullet * bulletList;
 } Player;
 
+typedef struct Enemy
+{
+  byte x, y;
+  byte mask[16];
+  Color color;
+  Bullet * bulletList;
+} Enemy;
 
 //Function Prototypes
 void RGB_update(int LED, byte RED, byte GREEN, byte BLUE);//function to drive LEDs

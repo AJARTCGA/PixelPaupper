@@ -1,29 +1,3 @@
-/*void drawPlayer(Player * p)
-{
-  float i, j;
-  int r1, r2;
-  Color c2;
-  r1 = p -> r1 * p ->r1;
-  r2 = p -> r2 * p ->r2;
-  for(i = 0; i <= 15; i++)
-  {
-    for(j = 0; j <= 15; j++)
-    {
-      if (r1/ ((i-p->x1)*(i-p->x1) + (j-p->y1)*(j-p->y1)) + r2 /((i-p->x2)*(i-p->x2) + (j-p->y2)*(j-p->y2)) >= 1)
-      {
-        setPixel(i, j, p -> color);
-      }  
-    }
-  }
-  c2.longColor = 0x10000000;
-  setPixel(p -> x1, p -> y1, c2);
-  setPixel(p -> x2, p -> y2, c2);
-  if(p -> bulletList != NULL)
-  {
-    drawBullet(p -> bulletList);
-  }
-}*/
-
 void drawPlayer(Player * p, byte doClear)
 {
   byte i, j;
@@ -88,6 +62,14 @@ void updateBullet(Bullet * b)
   {
     b -> dY *= -1;
   }
+  Serial.print(b->x.pixel);
+  Serial.print(" ");
+  Serial.print(b->y.pixel);
+  Serial.print(" ");
+  Serial.print(b->dX);
+  Serial.print(" ");
+  Serial.print(b->dY);
+  Serial.print("\n");
 }
 
 void updatePlayer(Player * p)
@@ -133,3 +115,26 @@ void rotatePlayer(Player * p)
   }
   memcpy(p->mask, tempArray, 25);
 }
+
+void drawEnemy(Enemy * e)
+{
+  byte i, j;
+  byte count = 0;
+  
+  for(j = e->y; j <= e->y + 3; j++)
+  {
+    for(i = e->x; i <= e->x + 3; i++)
+    {
+      if(e->mask[count])
+      {
+        setPixel(i, j, e->color);
+      }
+      count++;
+    }
+  }
+  if(e -> bulletList != NULL)
+  {
+    drawBullet(e -> bulletList);
+  }
+}
+
