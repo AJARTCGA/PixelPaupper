@@ -35,14 +35,25 @@ void setup()
   // enable global interrupts:
   sei();
   color.longColor = 0x10100000;
-  player.x1 = 8;
-  player.y1 = 7;
-  player.x2 = 13;
-  player.y2 = 7;
-  player.r1 = 3;
-  player.r2 = 2;
+  player.x = 10;
+  player.y = 7;
   player.color = color;
   player.bulletList = NULL;
+  for(int i = 0; i < 25; i++)
+  {
+    if(i%2)
+    {
+      player.mask[i] = 0;
+    }
+    else
+    {
+      player.mask[i] = 1;
+    }
+  }
+  for(int i = 0; i < 25; i++)
+  {
+    Serial.println(player.mask[i]);
+  }
   drawPlayer(&player);
   testBullet.x.subShort = 0x0100;
   testBullet.y.subShort = 0x0100;
@@ -68,7 +79,6 @@ void loop()
     drawPlayer(&player);
     drawBullet(&testBullet);
     color.longColor = 0x0f000000;
-    drawRect(0,0,16,16,color);
     RGB_update(-1,0,0,0);//LED#, RED, GREEN, BLUE
     
     

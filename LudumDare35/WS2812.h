@@ -32,7 +32,8 @@ typedef struct Bullet
 
 typedef struct Player
 {
-  byte x1, x2, y1, y2, r1, r2;
+  byte x, y;
+  byte mask[25];
   Color color;
   Bullet * bulletList;
 } Player;

@@ -1,4 +1,4 @@
-void drawPlayer(Player * p)
+/*void drawPlayer(Player * p)
 {
   float i, j;
   int r1, r2;
@@ -22,8 +22,29 @@ void drawPlayer(Player * p)
   {
     drawBullet(p -> bulletList);
   }
-}
+}*/
 
+void drawPlayer(Player * p)
+{
+  byte i, j;
+  byte count = 0;
+  for(i = p->x-2; i <= p->x + 2; i++)
+  {
+    for(j = p->y-2; j <= p->y + 2; j++)
+    {
+      //Serial.println(p->mask[i + j * 5]);
+      if(p->mask[count])
+      {
+        setPixel(i, j, p->color);
+      }
+      count++;
+    }
+  }
+  if(p -> bulletList != NULL)
+  {
+    drawBullet(p -> bulletList);
+  }
+}
 
 void drawBullet(Bullet * b)
 {
@@ -61,8 +82,8 @@ void playerShootBullet(Player * p)
   Bullet b;
   Color c;
   c.longColor = 0x00101000;
-  b.x.pixel = p -> x1;
-  b.y.pixel = p -> y1;
+  b.x.pixel = p->x;
+  b.y.pixel = p->y;
   b.dY = -1;
   b.nextBullet = NULL;
   b.color = c;
